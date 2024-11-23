@@ -27,7 +27,7 @@ export const Flex = styled.div<{
   width: ${({ width }) => width || '100%'};
 
   /* Responsive flex-direction change */
-  ${media.sm} {
+  ${media.md} {
     flex-direction: column; /* Switch to column for small screens */
   }
 `;

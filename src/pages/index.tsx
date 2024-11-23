@@ -5,12 +5,11 @@ import { Heading, Subheading, Text } from '../styles/Typography';
 import { PillButton, Flex, Container, HR } from '../styles/Base';
 import { Grid, GridItem } from '../styles/Grid';
 import { media } from '../utils/Media';
+import { theme } from '../styles/Theme';
 
 import CountDown from '../components/CountDown';
 
 const StyledHeading = styled(Heading)`
-  // margin-bottom: ${({ theme }) => theme.spacing.md};
-
   ${media.md} {
     font-size: ${({ theme }) => theme.fontSizes.xxl};
     margin-bottom: ${({ theme }) => theme.spacing.sm};
@@ -66,7 +65,7 @@ const HomePage: React.FC = () => (
                 Science-backed supplements, personalized DNA-driven insights, and
                 epigenetic testing to help take control of how you age.
               </StyledSubheading>
-              <Flex align="center" gap="16px" style={{ marginTop: '18px' }}>
+              <Flex align="center" gap={theme.spacing.md}>
                 <StyledPillButton variant="primary">Our Products</StyledPillButton>
                 <StyledPillButton variant="secondary">How Are You Aging?</StyledPillButton>
               </Flex>

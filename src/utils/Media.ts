@@ -1,5 +1,5 @@
 // utils/media.ts
-import { theme } from '../styles/theme';
+import { theme } from '../styles/Theme';
 
 export const media = {
   xs: `@media (max-width: ${theme.breakpoints.xs})`,
