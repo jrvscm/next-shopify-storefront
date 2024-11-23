@@ -25,8 +25,8 @@ const TimerWrapper = styled.div`
   z-index: 1;
 
   ${media.md} {
-    width: 240px;
-    height: 240px;
+    width: 280px;
+    height: 280px;
   }
   
 `;
@@ -60,8 +60,8 @@ const Ring = styled.span<{ position: number }>`
       : 'opacity 1.5s cubic-bezier(0.5, 0, 0, 1), transform 1s cubic-bezier(0.5, 0, 0, 1)'};
 
   ${media.md}{
-    width: 240px;
-    height: 240px;
+    width: 280px;
+    height: 280px;
   }
 `;
 

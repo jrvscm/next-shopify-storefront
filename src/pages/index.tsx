@@ -33,7 +33,7 @@ const StyledPillButton = styled(PillButton)`
 
 const StyledGridItem = styled(GridItem)`
   ${media.md} {
-    margin: 50px auto 80px auto;
+    margin: 6rem auto;
   }
 `;
 
@@ -42,6 +42,15 @@ const StyledHR = styled(HR)`
     margin-top: ${({ theme }) => theme.spacing.xs};
     margin-bottom: ${({ theme }) => theme.spacing.xs};
   }
+`;
+
+const StyledFlex = styled(Flex)`
+  height: 100%;
+`;
+
+const StyledGrid = styled(Grid)`
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const HomePage: React.FC = () => (
@@ -53,7 +62,7 @@ const HomePage: React.FC = () => (
       fallbackImage="/images/fallback.jpg"
     >
       <Container>
-        <Grid columns="repeat(12, 1fr)">
+        <StyledGrid columns="repeat(12, 1fr)">
           {/* Content Section */}
           <GridItem columnSpan="span 6" display="flex" order={1}>
             <Flex direction="column" justify="center" align="flex-start">
@@ -74,11 +83,11 @@ const HomePage: React.FC = () => (
 
           {/* Timer Section */}
           <StyledGridItem columnSpan="span 6" order={2}>
-            <Flex justify="center" align="center">
+            <StyledFlex justify="center" align="center">
               <CountDown />
-            </Flex>
+            </StyledFlex>
           </StyledGridItem>
-        </Grid>
+        </StyledGrid>
       </Container>
     </BackgroundVideo>
   </>

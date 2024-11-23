@@ -1,7 +1,7 @@
 // pages/_app.tsx
 import { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '../styles/theme';
+import { theme } from '../styles/Theme';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import { Poppins, Roboto } from 'next/font/google';
 import Layout from '../components/Layout';

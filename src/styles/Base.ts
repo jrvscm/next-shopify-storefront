@@ -3,12 +3,12 @@ import styled, { DefaultTheme } from 'styled-components';
 import { media } from '../utils/Media';
 
 export const Container = styled.div`
-  max-width: 1200px;
+  max-width: 1440px; /* Set the max-width of the site */
   margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.md};
+  padding: 0 ${({ theme }) => theme.spacing.lg};
 
   ${media.sm} {
-    padding: 0 ${({ theme }) => theme.spacing.sm};
+    padding: 0 ${({ theme }) => theme.spacing.md};
   }
 `;
 
