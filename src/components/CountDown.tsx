@@ -24,6 +24,10 @@ const TimerWrapper = styled.div`
     0 0 30px ${({ theme }) => theme.colors.primary};
   z-index: 1;
 
+  ${media.md} {
+    width: 240px;
+    height: 240px;
+  }
   
 `;
 
@@ -54,6 +58,11 @@ const Ring = styled.span<{ position: number }>`
     position === -1
       ? 'none'
       : 'opacity 1.5s cubic-bezier(0.5, 0, 0, 1), transform 1s cubic-bezier(0.5, 0, 0, 1)'};
+
+  ${media.md}{
+    width: 240px;
+    height: 240px;
+  }
 `;
 
 const TextWrapper = styled.div`
@@ -71,6 +80,10 @@ const TimerText = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.light};
   color: ${({ theme }) => theme.colors.white};
   margin-bottom: 8px;
+
+  ${media.md}{
+    font-size: ${({ theme }) => theme.fontSizes.md};
+  }
 `;
 
 const TimerValueWrapper = styled.div`
@@ -83,20 +96,19 @@ const TimerValueWrapper = styled.div`
 const TimerValue = styled.div`
   font-family: var(--font-poppins), sans-serif;
   font-size: 4rem;
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
   color: ${({ theme }) => theme.colors.white};
+
+  ${media.md}{
+    font-size: 3rem;
+  }
 `;
 
 const DownArrow = styled.svg`
   margin-top: 16px;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   fill: ${({ theme }) => theme.colors.secondary};
-
-  @media (max-width: 768px) {
-    width: 20px;
-    height: 20px;
-  }
 `;
 
 const Timer = () => {

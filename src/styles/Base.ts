@@ -64,7 +64,7 @@ export const Button = styled.button<{
   }
 
   @media (max-width: 768px) {
-    font-size: 14px;
+    // font-size: 14px;
     padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
   }
 `;
@@ -92,7 +92,7 @@ export const PillButton = styled(Button)`
   }
 
   @media (max-width: 768px) {
-    font-size: 14px;
+    // font-size: 14px;
     padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
   }
 `;

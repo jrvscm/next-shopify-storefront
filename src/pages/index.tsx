@@ -9,7 +9,18 @@ import { media } from '../utils/Media';
 import CountDown from '../components/CountDown';
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${({ theme }) => theme.spacing.md};
+  // margin-bottom: ${({ theme }) => theme.spacing.md};
+
+  ${media.md} {
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
+    margin-bottom: ${({ theme }) => theme.spacing.sm};
+  }
+`;
+
+const StyledSubheading = styled(Subheading)`
+  ${media.md} {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
 `;
 
 const StyledPillButton = styled(PillButton)`
@@ -23,7 +34,14 @@ const StyledPillButton = styled(PillButton)`
 
 const StyledGridItem = styled(GridItem)`
   ${media.md} {
-    margin: 150px auto 50px auto;
+    margin: 50px auto 80px auto;
+  }
+`;
+
+const StyledHR = styled(HR)`
+  ${media.md}{
+    margin-top: ${({ theme }) => theme.spacing.xs};
+    margin-bottom: ${({ theme }) => theme.spacing.xs};
   }
 `;
 
@@ -43,11 +61,11 @@ const HomePage: React.FC = () => (
               <StyledHeading size="xxxl" weight="extraBold" color="white">
                 Live healthier, longer
               </StyledHeading>
-              <Subheading size="lg" weight="light" color="white">
+              <StyledHR color="white" marginTop="0px" marginBottom="0px" opacity=".3" />
+              <StyledSubheading size="lg" weight="light" color="white">
                 Science-backed supplements, personalized DNA-driven insights, and
                 epigenetic testing to help take control of how you age.
-              </Subheading>
-              <HR color="white" marginTop="18px" marginBottom="18px" opacity=".3" />
+              </StyledSubheading>
               <Flex align="center" gap="16px" style={{ marginTop: '18px' }}>
                 <StyledPillButton variant="primary">Our Products</StyledPillButton>
                 <StyledPillButton variant="secondary">How Are You Aging?</StyledPillButton>
