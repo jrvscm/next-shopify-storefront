@@ -1,30 +1,32 @@
+// pages/_app.tsx
 import { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
-import { createGlobalStyle } from 'styled-components';
-
+import { GlobalStyle } from '../styles/GlobalStyle';
+import { Poppins, Roboto } from 'next/font/google';
 import Layout from '../components/Layout';
 
-const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  body {
-    font-family: ${({ theme }) => theme.fonts.main};
-    background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.text};
-  }
-`;
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'], // Specify weights used in the app
+  variable: '--font-poppins', // Custom CSS variable
+});
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['300', '400', '700'], // Specify weights used in the app
+  variable: '--font-roboto',
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <div className={`${poppins.variable} ${roboto.variable}`}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </div>
     </ThemeProvider>
   );
 }
