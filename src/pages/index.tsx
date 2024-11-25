@@ -116,8 +116,8 @@ const HomePage: React.FC = () => {
       
       <ContentLeftImageRight 
         isDesktop={isDesktop}
-        imageUrl={!isDesktop ? '/images/supplements.jpg' : "/images/supplements-dt.webp"} 
-        imageAlt={'Pill capsules'}
+        imageUrl={!isDesktop ? '/images/nikes-mobile-min.png' : "/images/nikes-min.jpg"} 
+        imageAlt={'Nike shoes'}
         buttonAction={() => null}
         features={[
           { icon: <FiActivity />, text: 'Premium-quality, lab-tested' },
@@ -125,9 +125,10 @@ const HomePage: React.FC = () => {
           { icon: <FiBookOpen />, text: 'Peer-reviewed research' },
           { icon: <FiShield />, text: 'Third-party safety certified' },
         ]}
-        heading={`Science-backed longevity supplements`}
-        description={`You want to live healthier, longer, and we know how to get you there—with cutting-edge pro-longevity formulations designed to help you slow aging from the inside out.`}
+        heading={`Amazingly beautiful premium products`}
+        description={`Discover the secrets to a vibrant, longer life with our innovative solutions—crafted to enhance wellness and support your journey to a healthier, more fulfilling future.`}
         buttonText={'View Our Amazing Products'}
+        containerBackground={theme.colors.background2}
       />
     </>
   )

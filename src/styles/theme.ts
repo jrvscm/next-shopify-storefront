@@ -4,7 +4,8 @@ export const theme: DefaultTheme = {
     secondary: '#FF7F50',
     background: '#f4f4f9',
     text: '#333',
-    white: '#fff'
+    white: '#fff',
+    background2: '#f0e9e7'
   },
   fonts: {
     heading: '"Poppins", Arial, sans-serif',

@@ -20,6 +20,7 @@ interface ContentLeftImageRightProps {
   buttonAction: () => void;
   features: Feature[];
   isDesktop: boolean;
+  containerBackground: string;
 }
 
 const StyledPillButton = styled(PillButton)`
@@ -29,7 +30,7 @@ const StyledPillButton = styled(PillButton)`
   }
 `;
 
-const StyledContainer = styled(Container)<{ $imageUrl: string }>`
+const StyledContainer = styled(Container)<{ $imageUrl: string, $containerBackground: string }>`
   max-width: unset;
   margin: 0;
   background: ${({ $imageUrl }) => `url(${$imageUrl}) center center`};
@@ -38,7 +39,7 @@ const StyledContainer = styled(Container)<{ $imageUrl: string }>`
 
   ${media.md} {
     padding: 0;
-    background: #edede5;
+    background: ${({ $containerBackground, theme }) => $containerBackground || theme.colors.white};
     background-size: unset;
     background-position: unset;
   }
@@ -98,8 +99,9 @@ const ContentLeftImageRight: React.FC<ContentLeftImageRightProps> = ({
   buttonAction,
   features,
   isDesktop,
+  containerBackground
 }) => (
-  <StyledContainer $imageUrl={!isDesktop ? 'none' : imageUrl}>
+  <StyledContainer $imageUrl={!isDesktop ? 'none' : imageUrl} $containerBackground={containerBackground}>
     <StyledGrid columns="repeat(12, 1fr)">
       {/* Stacked Content Mobile */}
       {!isDesktop && (
