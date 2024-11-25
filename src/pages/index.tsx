@@ -98,7 +98,16 @@ const HomePage: React.FC = () => {
       </BackgroundVideo>
       
       {/* Brands Section */}
-      <Brands />
+      <Brands brands={[
+        { src: '/images/brand10.svg', alt: 'Brand 10' },
+        { src: '/images/brand8.svg', alt: 'Brand 8' },
+        { src: '/images/brand7.svg', alt: 'Brand 7' },
+        { src: '/images/brand6.svg', alt: 'Brand 6' },
+        { src: '/images/brand5.svg', alt: 'Brand 5' },
+        { src: '/images/brand4.svg', alt: 'Brand 4' },
+        { src: '/images/brand3.svg', alt: 'Brand 3' },
+        { src: '/images/brand2.svg', alt: 'Brand 2' },
+  ]}/>
       
       <ContentLeftImageRight 
         isDesktop={isDesktop}
@@ -106,9 +115,9 @@ const HomePage: React.FC = () => {
         imageAlt={'Pill capsules'}
         buttonAction={() => null}
         features={[
-          { icon: <FiActivity />, text: 'Premium-quality, lab-tested ingredients' },
+          { icon: <FiActivity />, text: 'Premium-quality, lab-tested' },
           { icon: <FiTablet />, text: 'Formulated by scientists' },
-          { icon: <FiBookOpen />, text: 'Backed by peer-reviewed research' },
+          { icon: <FiBookOpen />, text: 'Peer-reviewed research' },
           { icon: <FiShield />, text: 'Third-party safety certified' },
         ]}
         heading={`Science-backed longevity supplements`}

@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { media } from '../utils/Media';
+import { theme } from '../styles/Theme';
 
 const marquee = keyframes`
   from {
@@ -11,45 +12,45 @@ const marquee = keyframes`
   }
 `;
 
-const MarqueeWrapper = styled.div`
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    position: relative;
-    user-select: none;
-    gap: 0; 
-    padding: ${({ theme }) => theme.spacing.xl};
-    background: ${({ theme }) => theme.colors.primary};
+const MarqueeWrapper = styled.div<{ backgroundColor: string }>`
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  position: relative;
+  user-select: none;
+  gap: 0;
+  padding: ${({ theme }) => theme.spacing.xl};
+  background: ${({ backgroundColor }) => backgroundColor};
 
-    ${media.sm}{
-       padding: ${({ theme }) => theme.spacing.lg};
-    } 
+  ${media.sm} {
+    padding: ${({ theme }) => theme.spacing.lg};
+  }
 `;
 
-const MarqueeContent = styled.div<{ duration: number }>`
-    display: flex;
-    gap: 60px;
-    animation: ${marquee} ${({ duration }) => duration}s linear infinite;
-    flex-shrink: 0;
-    min-width: 100vw;
-    padding-right: 60px;
+const MarqueeContent = styled.div<{ duration: number; gap: number }>`
+  display: flex;
+  gap: ${({ gap }) => `${gap}px`};
+  animation: ${marquee} ${({ duration }) => duration}s linear infinite;
+  flex-shrink: 0;
+  min-width: 100vw;
+  padding-right: ${({ gap }) => `${gap}px`};
 
-    ${media.sm}{
-        gap: ${({ theme }) => theme.spacing.lg};
-        padding-right: ${({ theme }) => theme.spacing.lg};
-    }   
+  ${media.sm} {
+    gap: ${({ theme }) => theme.spacing.lg};
+    padding-right: ${({ theme }) => theme.spacing.lg};
+  }
 `;
 
-const MarqueeItem = styled.div`
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: ${({ theme }) => theme.colors.secondary};
-    padding: 1rem 2rem;
-    border-radius: 0.25rem;
-    text-align: center;
-    margin: 2px;
+const MarqueeItem = styled.div<{ $marqueeItemBackground: string }>`
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-radius: 0.25rem;
+  text-align: center;
+  margin: 2px;
+  background: ${({ $marqueeItemBackground, theme }) => $marqueeItemBackground || theme.colors.secondary};
 `;
 
 const Image = styled.img`
@@ -58,68 +59,47 @@ const Image = styled.img`
   object-fit: contain;
 
   ${media.sm} {
-      max-width: 60px;
+    max-width: 60px;
   }
 `;
 
-const Brands: React.FC = () => {
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const duration = 35;
+interface Brand {
+  src: string;
+  alt: string;
+}
 
+interface BrandsProps {
+  brands: Brand[]; // Array of brand objects
+  duration?: number; // Animation duration
+  gap?: number; // Gap between items
+  backgroundColor?: string; // Background color for marquee
+  marqueeItemBackground?: string
+}
+
+const Brands: React.FC<BrandsProps> = ({
+  brands,
+  duration = 35,
+  gap = 60,
+  backgroundColor = theme.colors.primary,
+  marqueeItemBackground = theme.colors.secondary
+}) => {
   return (
-    <MarqueeWrapper>
-      <MarqueeContent ref={marqueeRef} duration={duration}>
-        <MarqueeItem>
-          <Image src="/images/brand10.svg" alt="Brand 10" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand8.svg" alt="Brand 8" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand7.svg" alt="Brand 7" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand6.svg" alt="Brand 6" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand5.svg" alt="Brand 5" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand4.svg" alt="Brand 4" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand3.svg" alt="Brand 3" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand2.svg" alt="Brand 2" />
-        </MarqueeItem>
+    <MarqueeWrapper backgroundColor={backgroundColor}>
+      {/* Primary Content */}
+      <MarqueeContent duration={duration} gap={gap}>
+        {brands.map((brand, index) => (
+          <MarqueeItem $marqueeItemBackground={marqueeItemBackground} key={index}>
+            <Image src={brand.src} alt={brand.alt} />
+          </MarqueeItem>
+        ))}
       </MarqueeContent>
-      {/* Duplicate content for seamless scrolling */}
-      <MarqueeContent duration={duration}>
-        <MarqueeItem>
-          <Image src="/images/brand10.svg" alt="Brand 10" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand8.svg" alt="Brand 8" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand7.svg" alt="Brand 7" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand6.svg" alt="Brand 6" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand5.svg" alt="Brand 5" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand4.svg" alt="Brand 4" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand3.svg" alt="Brand 3" />
-        </MarqueeItem>
-        <MarqueeItem>
-          <Image src="/images/brand2.svg" alt="Brand 2" />
-        </MarqueeItem>
+      {/* Duplicate Content for Seamless Scrolling */}
+      <MarqueeContent duration={duration} gap={gap}>
+        {brands.map((brand, index) => (
+          <MarqueeItem $marqueeItemBackground={marqueeItemBackground} key={`duplicate-${index}`}>
+            <Image src={brand.src} alt={brand.alt} />
+          </MarqueeItem>
+        ))}
       </MarqueeContent>
     </MarqueeWrapper>
   );
