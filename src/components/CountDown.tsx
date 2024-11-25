@@ -79,7 +79,6 @@ const TimerText = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xl};
   font-weight: ${({ theme }) => theme.fontWeights.light};
   color: ${({ theme }) => theme.colors.white};
-  margin-bottom: 8px;
 
   ${media.md} {
     font-size: ${({ theme }) => theme.fontSizes.md};
@@ -105,7 +104,6 @@ const TimerValue = styled.div`
 `;
 
 const DownArrow = styled.svg`
-  margin-top: 16px;
   width: 32px;
   height: 32px;
   fill: ${({ theme }) => theme.colors.secondary};
