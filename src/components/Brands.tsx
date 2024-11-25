@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { media } from '../utils/Media';
 
 const marquee = keyframes`
   from {
@@ -11,15 +12,18 @@ const marquee = keyframes`
 `;
 
 const MarqueeWrapper = styled.div`
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  position: relative;
-  user-select: none;
-  gap: 0; 
-  padding: ${({ theme }) => theme.spacing.xl};
-  background: ${({ theme }) => theme.colors.primary};
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    position: relative;
+    user-select: none;
+    gap: 0; 
+    padding: ${({ theme }) => theme.spacing.xl};
+    background: ${({ theme }) => theme.colors.primary};
+
+    ${media.sm}{
+       padding: ${({ theme }) => theme.spacing.lg};
+    } 
 `;
 
 const MarqueeContent = styled.div<{ duration: number }>`
@@ -29,24 +33,33 @@ const MarqueeContent = styled.div<{ duration: number }>`
     flex-shrink: 0;
     min-width: 100vw;
     padding-right: 60px;
+
+    ${media.sm}{
+        gap: ${({ theme }) => theme.spacing.lg};
+        padding-right: ${({ theme }) => theme.spacing.lg};
+    }   
 `;
 
 const MarqueeItem = styled.div`
-  flex: 0 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${({ theme }) => theme.colors.secondary};
-  padding: 1rem 2rem;
-  border-radius: 0.25rem;
-  text-align: center;
-  margin: 2px;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: ${({ theme }) => theme.colors.secondary};
+    padding: 1rem 2rem;
+    border-radius: 0.25rem;
+    text-align: center;
+    margin: 2px;
 `;
 
 const Image = styled.img`
   max-width: 120px;
   width: 100%;
   object-fit: contain;
+
+  ${media.sm} {
+      max-width: 60px;
+  }
 `;
 
 const Brands: React.FC = () => {

@@ -9,6 +9,7 @@ import { theme } from '../styles/Theme';
 
 import Brands from '../components/Brands';
 import CountDown from '../components/CountDown';
+import ContentLeftImageRight from '../components/ContentLeftImageRight';
 
 const StyledHeading = styled(Heading)`
   ${media.md} {
@@ -94,6 +95,8 @@ const HomePage: React.FC = () => (
     
     {/* Brands Section */}
     <Brands />
+    
+    {/* <ContentLeftImageRight imageUrl={"/images/supplements.jpg"} /> */}
   </>
 );
 
