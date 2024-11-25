@@ -10,7 +10,7 @@ import { theme } from '../styles/Theme';
 import { useDeviceType } from '../hooks/useDeviceType';
 
 import Brands from '../components/Brands';
-import CountDown from '../components/CountDown';
+import Timer from '../components/CountDown';
 import ContentLeftImageRight from '../components/ContentLeftImageRight';
 
 const StyledHeading = styled(Heading)`
@@ -90,7 +90,12 @@ const HomePage: React.FC = () => {
             {/* Timer Section */}
             <StyledGridItem columnSpan="span 6" order={2}>
               <StyledFlex justify="center" align="center">
-                <CountDown />
+              <Timer 
+                timerStart={50}
+                timerEnd={30}
+                primaryText="Countdown to"
+                secondaryText="great event"
+              />
               </StyledFlex>
             </StyledGridItem>
           </StyledGrid>
@@ -107,7 +112,7 @@ const HomePage: React.FC = () => {
         { src: '/images/brand4.svg', alt: 'Brand 4' },
         { src: '/images/brand3.svg', alt: 'Brand 3' },
         { src: '/images/brand2.svg', alt: 'Brand 2' },
-  ]}/>
+    ]}/>
       
       <ContentLeftImageRight 
         isDesktop={isDesktop}

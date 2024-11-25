@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { media } from '../utils/Media';
+
 const OuterWrapper = styled.div`
   position: relative;
   display: flex;
@@ -28,7 +29,6 @@ const TimerWrapper = styled.div`
     width: 280px;
     height: 280px;
   }
-  
 `;
 
 const Ring = styled.span<{ position: number }>`
@@ -39,8 +39,8 @@ const Ring = styled.span<{ position: number }>`
   height: 340px;
   pointer-events: none;
   transform: scale(${({ position }) => {
-    const baseScale = 1; // Base scale for the innermost ring
-    const scaleIncrement = 0.15; // Increment for each ring
+    const baseScale = 1;
+    const scaleIncrement = 0.15;
     return baseScale + position * scaleIncrement;
   }});
   opacity: ${({ position }) =>
@@ -59,7 +59,7 @@ const Ring = styled.span<{ position: number }>`
       ? 'none'
       : 'opacity 1.5s cubic-bezier(0.5, 0, 0, 1), transform 1s cubic-bezier(0.5, 0, 0, 1)'};
 
-  ${media.md}{
+  ${media.md} {
     width: 280px;
     height: 280px;
   }
@@ -81,7 +81,7 @@ const TimerText = styled.div`
   color: ${({ theme }) => theme.colors.white};
   margin-bottom: 8px;
 
-  ${media.md}{
+  ${media.md} {
     font-size: ${({ theme }) => theme.fontSizes.md};
   }
 `;
@@ -99,7 +99,7 @@ const TimerValue = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.regular};
   color: ${({ theme }) => theme.colors.white};
 
-  ${media.md}{
+  ${media.md} {
     font-size: 4rem;
   }
 `;
@@ -111,8 +111,20 @@ const DownArrow = styled.svg`
   fill: ${({ theme }) => theme.colors.secondary};
 `;
 
-const Timer = () => {
-  const [timerValue, setTimerValue] = useState(41);
+interface TimerProps {
+  timerStart?: number;
+  timerEnd?: number;
+  primaryText?: string;
+  secondaryText?: string;
+}
+
+const Timer: React.FC<TimerProps> = ({
+  timerStart = 41,
+  timerEnd = 35,
+  primaryText = 'Lower your',
+  secondaryText = 'epigenetic age',
+}) => {
+  const [timerValue, setTimerValue] = useState(timerStart);
   const [isCountingDown, setIsCountingDown] = useState(true);
   const [ringPositions, setRingPositions] = useState<number[]>([0, 1, 2, 3, -1]);
 
@@ -120,25 +132,23 @@ const Timer = () => {
     const timerInterval = setInterval(() => {
       setTimerValue((prevValue) => {
         if (isCountingDown) {
-          if (prevValue > 35) return prevValue - 1;
+          if (prevValue > timerEnd) return prevValue - 1;
           setIsCountingDown(false);
           return prevValue;
         } else {
-          if (prevValue < 41) return prevValue + 1;
+          if (prevValue < timerStart) return prevValue + 1;
           setIsCountingDown(true);
           return prevValue;
         }
       });
-  
-      // Update ring positions with modulo logic
-      setRingPositions((prevPositions) => {
-        const newPositions = prevPositions.map((pos) => (pos + 1) % 5); // Cycle positions smoothly
-        return newPositions;
-      });
+
+      setRingPositions((prevPositions) =>
+        prevPositions.map((pos) => (pos + 1) % 5)
+      );
     }, 900);
-  
+
     return () => clearInterval(timerInterval);
-  }, [isCountingDown]);
+  }, [isCountingDown, timerStart, timerEnd]);
 
   return (
     <OuterWrapper>
@@ -147,7 +157,11 @@ const Timer = () => {
       ))}
       <TimerWrapper />
       <TextWrapper>
-        <TimerText>Lower your<br />epigenetic age</TimerText>
+        <TimerText>
+          {primaryText}
+          <br />
+          {secondaryText}
+        </TimerText>
         <TimerValueWrapper>
           <TimerValue>{timerValue}</TimerValue>
           <DownArrow xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
