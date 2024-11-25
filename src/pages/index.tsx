@@ -7,6 +7,7 @@ import { Grid, GridItem } from '../styles/Grid';
 import { media } from '../utils/Media';
 import { theme } from '../styles/Theme';
 
+import Brands from '../components/Brands';
 import CountDown from '../components/CountDown';
 
 const StyledHeading = styled(Heading)`
@@ -90,6 +91,9 @@ const HomePage: React.FC = () => (
         </StyledGrid>
       </Container>
     </BackgroundVideo>
+    
+    {/* Brands Section */}
+    <Brands />
   </>
 );
 

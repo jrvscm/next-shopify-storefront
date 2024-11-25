@@ -1,19 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container } from '../styles/Base'; // Assuming Container is pre-defined for layout
+import { Container } from '../styles/Base';
 
 const BannerWrapper = styled.div<{ backgroundColor?: string }>`
   width: 100%;
   background-color: ${({ backgroundColor, theme }) => backgroundColor || theme.colors.primary};
-  padding: ${({ theme }) => theme.spacing.lg} 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 6;
 `;
 
-const BannerContent = styled.div`
+const BannerContent = styled.div<{ color?: string}>`
   text-align: center;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme, color }) => color || theme.colors.text};
 `;
 
 const BannerTitle = styled.h2`
@@ -26,21 +26,22 @@ const BannerTitle = styled.h2`
 const BannerSubtitle = styled.p`
   font-family: var(--font-roboto), sans-serif;
   font-size: ${({ theme }) => theme.fontSizes.md};
-  font-weight: ${({ theme }) => theme.fontWeights.regular};
-  margin: ${({ theme }) => theme.spacing.sm} 0 0;
+  font-weight: ${({ theme }) => theme.fontWeights.semiBold};
+  margin: ${({ theme }) => theme.spacing.xs} 0;
 `;
 
 interface BannerProps {
-  title: string;
+  title?: string;
   subtitle?: string;
-  backgroundColor?: string; // Optional background color
+  backgroundColor?: string;
+  color?: string;
 }
 
-const Banner: React.FC<BannerProps> = ({ title, subtitle, backgroundColor }) => (
+const Banner: React.FC<BannerProps> = ({ title, subtitle, backgroundColor, color }) => (
   <BannerWrapper backgroundColor={backgroundColor}>
     <Container>
-      <BannerContent>
-        <BannerTitle>{title}</BannerTitle>
+      <BannerContent color={color}>
+        {title && <BannerTitle>{title}</BannerTitle>}
         {subtitle && <BannerSubtitle>{subtitle}</BannerSubtitle>}
       </BannerContent>
     </Container>

@@ -95,12 +95,12 @@ const TimerValueWrapper = styled.div`
 
 const TimerValue = styled.div`
   font-family: var(--font-poppins), sans-serif;
-  font-size: 4rem;
+  font-size: 5rem;
   font-weight: ${({ theme }) => theme.fontWeights.regular};
   color: ${({ theme }) => theme.colors.white};
 
   ${media.md}{
-    font-size: 3rem;
+    font-size: 4rem;
   }
 `;
 

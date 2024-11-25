@@ -18,6 +18,7 @@ export const Flex = styled.div<{
   direction?: string;
   gap?: string;
   width?: string;
+  wrap?: string;
 }>`
   display: flex;
   justify-content: ${({ justify }) => justify || 'flex-start'};
@@ -25,6 +26,7 @@ export const Flex = styled.div<{
   flex-direction: ${({ direction }) => direction || 'row'};
   gap: ${({ gap, theme }) => gap || theme.spacing.md};
   width: ${({ width }) => width || '100%'};
+  flex-wrap: ${({ wrap }) => wrap || 'none'};
 
   /* Responsive flex-direction change */
   ${media.md} {

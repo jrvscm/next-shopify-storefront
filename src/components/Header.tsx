@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import { HR, Container } from '../styles/Base';
 import { media } from '../utils/Media';
+import { theme } from '../styles/Theme';
+import { fetchFeatureFlags } from '../utils/contentful';
+import { MdAccountCircle } from 'react-icons/md'; 
+import { FiShoppingCart } from 'react-icons/fi';
+import Banner from '../components/Banner';
 
 const HeaderWrapper = styled.header`
   background-color: transparent;
-  padding: ${({ theme }) => theme.spacing.lg} 0;
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  z-index: 5; /* Ensure header is always above the mobile menu */
+  z-index: 5;
   width: 100%;
 `;
 
@@ -18,6 +23,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: ${({ theme }) => `${theme.spacing.md} 0`};
 `;
 
 const Logo = styled.div`
@@ -25,7 +31,7 @@ const Logo = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xxl};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.white};
-  z-index: 6; /* Ensure logo stays above the mobile menu */
+  z-index: 6;
 `;
 
 const NavLinks = styled.div`
@@ -102,9 +108,9 @@ const HamburgerMenu = styled.div<{ isOpen: boolean }>`
   }
 `;
 
-const MobileMenu = styled.div<{ isOpen: boolean }>`
+const MobileMenu = styled.div<{ isOpen: boolean, $hasBanner: boolean, $bannerHeight: number }>`
   position: fixed;
-  top: 0;
+  top: ${({ $hasBanner, $bannerHeight }) =>  $hasBanner && $bannerHeight && `${$bannerHeight}px` || 0};
   left: 0;
   bottom: 0;
   width: 100%;
@@ -134,11 +140,69 @@ const MobileMenu = styled.div<{ isOpen: boolean }>`
   }
 
   /* Add padding to ensure links don’t overlap with the header */
-  padding-top:120px; 
+  padding-top: 120px; 
+`;
+
+const StyledHR = styled(HR)`
+  margin: 0;
+`;
+
+const IconButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.md};
+  z-index: 6; /* Ensure this stays above the mobile menu */
+
+  ${media.md}{
+    margin-left: auto;
+    margin-right: ${({ theme }) => theme.spacing.md};
+  }
+`;
+
+const IconButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 1.5rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.secondary};
+  }
 `;
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [bannerHeight, setBannerHeight] = useState(0);
+  const [bannerData, setBannerData] = useState<any>(null);
+  const [hasBanner, setHasBanner] = useState(false);
+  const { asPath } = useRouter();
+  const bannerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const fetchBanner = async () => {
+      try {
+        const featureFlags = await fetchFeatureFlags();
+        const banner = featureFlags.find((flag) => flag.enabled && flag?.featureData?.type === 'promotionalBanner');
+        const { featureData = {} } = banner;
+        if(featureData?.name && featureData?.pageSlug === '*' || featureData.pageSlug === asPath) {
+          setBannerData(featureData);
+          setHasBanner(true);
+        }
+      } catch (error) {
+        console.error('Error fetching feature flags:', error);
+      }
+    };
+
+    fetchBanner();
+  }, []);
+
+  useEffect(() => {
+    if (bannerRef.current) {
+      setBannerHeight(bannerRef.current.offsetHeight);
+    }
+  }, [bannerData]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -146,6 +210,7 @@ const Header: React.FC = () => {
 
   return (
     <HeaderWrapper>
+      {hasBanner && <div ref={bannerRef}><Banner backgroundColor={theme.colors.secondary} subtitle={bannerData.subtitle} /></div>}
       <Container>
         <Nav>
           <Logo>tally</Logo>
@@ -156,16 +221,23 @@ const Header: React.FC = () => {
             <a href="#supplements">Supplements</a>
             <a href="#shop">Shop</a>
           </NavLinks>
-          <CartButton>Cart</CartButton>
+          <IconButtonGroup>
+            <IconButton>
+              <FiShoppingCart aria-label="Cart" />
+            </IconButton>
+            <IconButton>
+              <MdAccountCircle aria-label="Account" />
+            </IconButton>
+          </IconButtonGroup>
           <HamburgerMenu isOpen={menuOpen} onClick={toggleMenu}>
             <span />
             <span />
             <span />
           </HamburgerMenu>
         </Nav>
-        <HR color="white" opacity=".3" />
+        <StyledHR color="white" opacity=".3" />
       </Container>
-      <MobileMenu isOpen={menuOpen}>
+      <MobileMenu isOpen={menuOpen} $hasBanner={hasBanner} $bannerHeight={bannerHeight}>
         <a href="#science" onClick={toggleMenu}>Science</a>
         <a href="#quiz" onClick={toggleMenu}>Quiz</a>
         <a href="#bundles" onClick={toggleMenu}>Bundles</a>
