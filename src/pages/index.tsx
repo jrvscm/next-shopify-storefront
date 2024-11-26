@@ -38,7 +38,7 @@ const StyledPillButton = styled(PillButton)`
 
 const StyledGridItem = styled(GridItem)`
   ${media.md} {
-    margin: 6rem auto;
+    margin: 7rem auto 4rem auto;
   }
 `;
 
@@ -72,7 +72,7 @@ const HomePage: React.FC = () => {
           <StyledGrid columns="repeat(12, 1fr)">
             {/* Content Section */}
             <GridItem columnSpan="span 6" display="flex" order={1}>
-              <Flex direction="column" justify="center" align="flex-start">
+              <Flex direction="column" justify="center" align="flex-start" margin={`0 auto ${theme.spacing.lg}`}>
                 <StyledHeading size="xxxl" weight="extraBold" color="white">
                   What is Lorem Ipsum?
                 </StyledHeading>
@@ -91,12 +91,12 @@ const HomePage: React.FC = () => {
             {/* Timer Section */}
             <StyledGridItem columnSpan="span 6" order={2}>
               <StyledFlex justify="center" align="center">
-              <Timer 
-                timerStart={50}
-                timerEnd={30}
-                primaryText="Countdown to"
-                secondaryText="great event"
-              />
+                <Timer 
+                  timerStart={50}
+                  timerEnd={30}
+                  primaryText="Countdown to"
+                  secondaryText="great event"
+                />
               </StyledFlex>
             </StyledGridItem>
           </StyledGrid>
@@ -143,6 +143,7 @@ const HomePage: React.FC = () => {
         percentage={62}
         duration={2000}
         onButtonClick={() => alert('Button clicked!')}
+        isDesktop={isDesktop}
       />
     </>
   )

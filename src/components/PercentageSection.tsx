@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Container, PillButton } from '../styles/Base';
 import { Subheading, Text } from '../styles/Typography';
@@ -17,23 +17,29 @@ const FullWidthContainer = styled(Container)`
     ${({ theme }) => theme.colors.primary}CC,
     ${({ theme }) => theme.colors.primary}
   );
+  ${media.md} {
+      padding: 0;
+  }
 `;
 
 const StyledContainer = styled(Container)`
-    background: transparent;
-    color: ${({ theme }) => theme.colors.white};
-    padding: 60px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    max-width: 1200px;
+  background: transparent;
+  color: ${({ theme }) => theme.colors.white};
+  padding: 60px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  max-width: 1200px;
 
-    ${media.md} {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
+  ${media.md} {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 30px;
+    padding: ${({ theme }) => `0 ${theme.spacing.md}`};
+    height: 100%;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -49,27 +55,27 @@ const ContentWrapper = styled.div`
 
 const TimerWrapper = styled.div`
   position: relative;
-  width: 340px;
-  height: 340px;
+  width: 400px;
+  height: 400px;
   margin: 0 auto;
 
   ${media.md} {
-    width: 150px;
-    height: 150px;
+    width: 20rem;
+    height: 20rem;
   }
 `;
 
 const CircularBackground = styled.circle`
   fill: none;
   stroke: ${({ theme }) => theme.colors.secondary};
-  stroke-width: 8;
+  stroke-width: 2;
   opacity: 0.2;
 `;
 
 const CircularProgress = styled.circle<{ percentage: number }>`
   fill: none;
   stroke: ${({ theme }) => theme.colors.secondary};
-  stroke-width: 8;
+  stroke-width: 2;
   stroke-dasharray: ${({ percentage }) => `${(percentage / 100) * 283} 283`};
   stroke-dashoffset: 0;
   transform: rotate(90deg);
@@ -83,13 +89,9 @@ const TimerValue = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: ${({ theme }) => theme.fonts.heading};
-  font-size: 4rem;
+  font-size: 6rem;
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.white};
-
-  ${media.md} {
-    font-size: 2rem;
-  }
 `;
 
 const StyledPillButton = styled(PillButton)`
@@ -102,6 +104,18 @@ const StyledPillButton = styled(PillButton)`
   }
 `;
 
+const StyledSubheading = styled(Subheading)`
+  ${media.md}{
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
+  }
+`;
+
+const StyledText = styled(Text)`
+  ${media.md} {
+    font-size: ${({ theme }) => theme.fontSizes.md};
+  }
+`;
+
 const AnimatedSection = ({
   title,
   description,
@@ -109,6 +123,7 @@ const AnimatedSection = ({
   percentage = 62,
   duration = 2000,
   onButtonClick,
+  isDesktop
 }: {
   title: ReactNode;
   description: ReactNode;
@@ -116,54 +131,83 @@ const AnimatedSection = ({
   percentage?: number; // Percentage for the timer
   duration?: number; // Animation duration in milliseconds
   onButtonClick?: () => void;
+  isDesktop?: boolean;
 }) => {
   const [currentPercentage, setCurrentPercentage] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const increment = percentage / (duration / 50); // Increment step
-    const interval = setInterval(() => {
-      setCurrentPercentage((prev) => {
-        const nextValue = prev + increment;
-        if (nextValue >= percentage) {
-          clearInterval(interval);
-          return percentage;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
         }
-        return nextValue;
-      });
-    }, 50);
+      },
+      { threshold: 0.5 } // Trigger when 50% of the section is visible
+    );
 
-    return () => clearInterval(interval);
-  }, [percentage, duration]);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      const increment = percentage / (duration / 50); // Increment step
+      const interval = setInterval(() => {
+        setCurrentPercentage((prev) => {
+          const nextValue = prev + increment;
+          if (nextValue >= percentage) {
+            clearInterval(interval);
+            return percentage;
+          }
+          return nextValue;
+        });
+      }, 50);
+
+      return () => clearInterval(interval);
+    }
+  }, [isVisible, percentage, duration]);
 
   return (
-    <FullWidthContainer>
-        <StyledContainer>
-            {/* Left Content */}
-            <ContentWrapper>
-                <Subheading size="xxxl">{title}</Subheading>
-                <Text size="lg">{description}</Text>
-                <StyledPillButton variant="tertiary" onClick={onButtonClick}>
-                {buttonText}
-                </StyledPillButton>
-            </ContentWrapper>
+    <FullWidthContainer ref={sectionRef}>
+      <StyledContainer>
+        {/* Left Content */}
+        <ContentWrapper>
+          <StyledSubheading size="xxxl">{title}</StyledSubheading>
+          <StyledText size="lg" weight="light">{description}</StyledText>
+          {isDesktop && (<StyledPillButton variant="tertiary" onClick={onButtonClick}>
+            {buttonText}
+          </StyledPillButton>)}
+        </ContentWrapper>
 
-            {/* Timer Section */}
-            <TimerWrapper>
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                {/* Background Circle */}
-                <CircularBackground cx="50" cy="50" r="45" />
-                {/* Progress Circle */}
-                <CircularProgress
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    percentage={currentPercentage}
-                />
-                </svg>
-                {/* Timer Value */}
-                <TimerValue>{currentPercentage.toFixed(0)}%</TimerValue>
-            </TimerWrapper>
-        </StyledContainer>
+        {/* Timer Section */}
+        <TimerWrapper>
+          <svg width="100%" height="100%" viewBox="0 0 100 100">
+            {/* Background Circle */}
+            <CircularBackground cx="50" cy="50" r="45" />
+            {/* Progress Circle */}
+            <CircularProgress
+              cx="50"
+              cy="50"
+              r="45"
+              percentage={currentPercentage}
+            />
+          </svg>
+          {/* Timer Value */}
+          <TimerValue>{currentPercentage.toFixed(0)}%</TimerValue>
+        </TimerWrapper>
+            {!isDesktop && (<StyledPillButton variant="tertiary" onClick={onButtonClick}>
+                {buttonText}
+            </StyledPillButton>)}
+      </StyledContainer>
     </FullWidthContainer>
   );
 };

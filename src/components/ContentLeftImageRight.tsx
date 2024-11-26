@@ -42,6 +42,7 @@ const StyledContainer = styled(Container)<{ $imageUrl: string, $containerBackgro
     background: ${({ $containerBackground, theme }) => $containerBackground || theme.colors.white};
     background-size: unset;
     background-position: unset;
+    padding: ${({ theme }) => `0 ${theme.spacing.md} ${theme.spacing.xl} ${theme.spacing.md}`};
   }
 `;
 
@@ -85,7 +86,6 @@ const Image = styled.img`
 
 const StyledGridItem = styled(GridItem)`
   ${media.md} {
-    padding: ${({ theme }) => theme.spacing.lg};
     margin-top: -4rem;
   }
 `;

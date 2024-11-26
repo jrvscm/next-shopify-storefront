@@ -19,6 +19,7 @@ export const Flex = styled.div<{
   gap?: string;
   width?: string;
   wrap?: string;
+  margin?: string;
 }>`
   display: flex;
   justify-content: ${({ justify }) => justify || 'flex-start'};
@@ -27,6 +28,7 @@ export const Flex = styled.div<{
   gap: ${({ gap, theme }) => gap || theme.spacing.md};
   width: ${({ width }) => width || '100%'};
   flex-wrap: ${({ wrap }) => wrap || 'none'};
+  margin: ${({ margin }) => margin || '0'};
 
   /* Responsive flex-direction change */
   ${media.md} {
