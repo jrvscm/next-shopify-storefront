@@ -47,7 +47,7 @@ const StyledContainer = styled(Container)<{ $imageUrl: string, $containerBackgro
 `;
 
 const StyledGrid = styled(Grid)`
-  padding: 60px 0px;
+  padding: 120px 0px;
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
