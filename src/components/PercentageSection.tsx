@@ -18,7 +18,7 @@ const FullWidthContainer = styled(Container)`
     ${({ theme }) => theme.colors.primary}
   );
   ${media.md} {
-      padding: 0;
+    padding: ${({ theme }) => `${theme.spacing.xl} 0`};
   }
 `;
 
@@ -37,8 +37,7 @@ const StyledContainer = styled(Container)`
     justify-content: center;
     text-align: center;
     gap: 30px;
-    padding: ${({ theme }) => `0 ${theme.spacing.md}`};
-    height: 100%;
+    padding: ${({ theme }) => `${theme.spacing.md}`};
   }
 `;
 

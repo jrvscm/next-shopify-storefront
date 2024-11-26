@@ -127,7 +127,7 @@ const HomePage: React.FC = () => {
           { icon: <FiShield />, text: 'Third-party safety certified' },
         ]}
         heading={`Amazingly beautiful premium products`}
-        description={`Discover the secrets to a vibrant, longer life with our innovative solutions—crafted to enhance wellness and support your journey to a healthier, more fulfilling future.`}
+        description={`Unlock the path to a healthier, more vibrant life with cutting-edge innovations—designed to empower wellness and elevate your journey toward a brighter, more fulfilling tomorrow.`}
         buttonText={'View Our Amazing Products'}
         containerBackground={theme.colors.background2}
       />
