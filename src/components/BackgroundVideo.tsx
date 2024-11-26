@@ -1,4 +1,3 @@
-// components/BackgroundVideo.tsx
 import React from 'react';
 import styled from 'styled-components';
 
@@ -15,9 +14,6 @@ const VideoWrapper = styled.div<{ fallbackImage?: string }>`
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   /* Fallback image if the video fails to load */
   background-image: ${({ fallbackImage }) =>
@@ -47,12 +43,18 @@ const Overlay = styled.div<{ color: string; opacity: number }>`
   z-index: 1;
 `;
 
-const Content = styled.div`
+const FlexContainer = styled.div`
   position: relative;
   z-index: 2;
   width: 100%;
+  height: 100%;
+  
+`;
+
+const Content = styled.div`
   text-align: center;
   color: white;
+  height: 100vh;
 `;
 
 export const BackgroundVideo: React.FC<BackgroundVideoProps> = ({
@@ -68,6 +70,10 @@ export const BackgroundVideo: React.FC<BackgroundVideoProps> = ({
       Your browser does not support the video tag.
     </Video>
     <Overlay color={overlayColor} opacity={overlayOpacity} />
-    <Content>{children}</Content>
+    <FlexContainer>
+      <Content>{children}</Content>
+    </FlexContainer>
   </VideoWrapper>
 );
+
+export default BackgroundVideo;

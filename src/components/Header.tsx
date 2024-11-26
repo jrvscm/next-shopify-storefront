@@ -213,7 +213,7 @@ const Header: React.FC = () => {
       {hasBanner && <div ref={bannerRef}><Banner backgroundColor={theme.colors.secondary} subtitle={bannerData.subtitle} /></div>}
       <Container>
         <Nav>
-          <Logo>tally</Logo>
+          <Logo>brand</Logo>
           <NavLinks>
             <a href="#science">Science</a>
             <a href="#quiz">Quiz</a>

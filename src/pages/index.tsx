@@ -13,6 +13,8 @@ import Brands from '../components/Brands';
 import Timer from '../components/CountDown';
 import ContentLeftImageRight from '../components/ContentLeftImageRight';
 import PercentageSection from '../components/PercentageSection';
+import ReviewsSection from '../components/ReviewsSection';
+import ParallaxCards from '../components/ParallaxCards';
 
 const StyledHeading = styled(Heading)`
   ${media.md} {
@@ -56,10 +58,38 @@ const StyledFlex = styled(Flex)`
 const StyledGrid = styled(Grid)`
   max-width: 1200px;
   margin: 0 auto;
+  min-height: 100vh;
 `;
 
 const HomePage: React.FC = () => {
   const { isDesktop } = useDeviceType();
+  const cardsData = [
+    {
+      videoSrc: `https://videos.ctfassets.net/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}/3xAaOGGP8vIPwttsYa7TJm/e120e6e77db6a96674d95c053140f5eb/wheat.mp4`,
+      title: 'The prairie hums with life, its grasses swaying beneath endless skies.',
+      description: '',
+      textPosition: 'top-left',
+      textAlign: 'left',
+      color: theme.colors.white
+    },
+    {
+      videoSrc: `https://videos.ctfassets.net/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}/4eZYFeMZ2hz5nhxOtaLzdS/a9898e314f0c5621a001cd26d382fad2/2414312-hd_1920_1080_30fps.mp4`,
+      title: 'The ocean teems with vibrant life, showcasing a fascinating array of creatures, from bioluminescent jellyfish to agile, curious dolphins.',
+      description: '',
+      textPosition: 'center',
+      textAlign: 'center',
+      color: theme.colors.white
+    },
+    {
+      videoSrc: `https://videos.ctfassets.net/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}/3KRa1ocovOXQjrDiiblzCU/4837529a1cd54a94b68e9637d52674af/beach.mp4`,
+      title: 'The steady rhythm of waves meets the quiet strength of the shoreline, a place where sea and sky converge.',
+      description: '',
+      textPosition: 'bottom-right',
+      textAlign: 'left',
+      color: theme.colors.white
+    },
+  ];
+
   return (
     <>
       <BackgroundVideo
@@ -145,6 +175,33 @@ const HomePage: React.FC = () => {
         onButtonClick={() => alert('Button clicked!')}
         isDesktop={isDesktop}
       />
+
+      <ReviewsSection
+        title="Verified Reviews"
+        subtitle="Hear from our customers"
+        reviews={[
+          {
+            content:
+              "I've noticed a remarkable boost in my overall energy levels and focus since using these products. It's been a game-changer for my daily routine.",
+            verified: "VERIFIED CUSTOMER",
+          },
+          {
+            content:
+              "The supplements have significantly improved my sleep quality and overall wellness. I feel rejuvenated and ready to take on the day!",
+            verified: "VERIFIED CUSTOMER",
+          },
+          {
+            content:
+              "After trying several similar products, this is the first one that truly delivers on its promises. My mood and energy levels have never been better.",
+            verified: "VERIFIED CUSTOMER",
+          },
+        ]}
+        buttonText="Shop Now"
+        onButtonClick={() => console.log("Redirect to shop page")}
+      />
+
+      {/* Parallax Cards */}
+      <ParallaxCards cards={cardsData} />
     </>
   )
 };
