@@ -35,7 +35,7 @@ export const Flex = styled.div<{
 `;
 
 export const Button = styled.button<{
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'tertiary';
 }>`
   padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
   font-size: 18px;
@@ -45,18 +45,18 @@ export const Button = styled.button<{
   transition: all 0.3s ease;
 
   background-color: ${({ variant, theme }) =>
-    variant === 'primary' ? theme.colors.primary : 'transparent'};
+    variant === 'primary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.secondary : 'transparent'};
   color: ${({ variant, theme }) =>
-    variant === 'primary' ? theme.colors.white : theme.colors.white};
-  border: ${({ theme }) => `2px solid ${theme.colors.primary}`};
+    variant === 'primary' ? theme.colors.white : variant === 'secondary' ? theme.colors.white : theme.colors.text};
+  border: ${({ theme, variant }) => `2px solid ${variant === 'secondary' || variant === 'primary' ? theme.colors.primary : theme.colors.secondary}`};
   filter: ${({ variant, theme }) =>
-    variant === 'secondary' ? 'none' : 'brightness(85%)'};
+    variant === 'secondary' || variant === 'tertiary' ? 'none' : 'brightness(90%)'};
 
   &:hover {
     background-color: ${({ variant, theme }) =>
-      variant === 'primary' ? theme.colors.secondary : theme.colors.white};
+      variant === 'primary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.secondary : theme.colors.white};
     color: ${({ variant, theme }) =>
-      variant === 'secondary' ? theme.colors.primary : theme.colors.primary};
+      variant === 'secondary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.text : theme.colors.primary};
     filter: ${({ variant, theme }) =>
       variant === 'secondary' ? 'none' : 'brightness(100%)'};
   }
@@ -77,14 +77,14 @@ export const PillButton = styled(Button)`
   padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.xl}`}; /* Extra horizontal padding for a pill look */
   cursor: pointer;
   filter: ${({ variant, theme }) =>
-    variant === 'secondary' ? 'none' : 'brightness(85%)'};
+    variant === 'secondary' ? 'none' : 'brightness(90%)'};
   font-size: 18px;
 
   &:hover {
     background-color: ${({ variant, theme }) =>
-      variant === 'primary' ? theme.colors.primary : theme.colors.white};
+      variant === 'primary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.secondary : theme.colors.white};
     color: ${({ variant, theme }) =>
-      variant === 'secondary' ? theme.colors.primary : theme.colors.white};
+      variant === 'secondary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.text : theme.colors.white};
     filter: ${({ variant, theme }) =>
       variant === 'secondary' ? 'none' : 'brightness(100%)'};
   }

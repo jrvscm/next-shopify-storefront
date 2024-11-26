@@ -12,6 +12,7 @@ import { useDeviceType } from '../hooks/useDeviceType';
 import Brands from '../components/Brands';
 import Timer from '../components/CountDown';
 import ContentLeftImageRight from '../components/ContentLeftImageRight';
+import PercentageSection from '../components/PercentageSection';
 
 const StyledHeading = styled(Heading)`
   ${media.md} {
@@ -112,7 +113,7 @@ const HomePage: React.FC = () => {
         { src: '/images/brand4.svg', alt: 'Brand 4' },
         { src: '/images/brand3.svg', alt: 'Brand 3' },
         { src: '/images/brand2.svg', alt: 'Brand 2' },
-    ]}/>
+      ]}/>
       
       <ContentLeftImageRight 
         isDesktop={isDesktop}
@@ -129,6 +130,19 @@ const HomePage: React.FC = () => {
         description={`Discover the secrets to a vibrant, longer life with our innovative solutions—crafted to enhance wellness and support your journey to a healthier, more fulfilling future.`}
         buttonText={'View Our Amazing Products'}
         containerBackground={theme.colors.background2}
+      />
+
+      <PercentageSection
+        title={
+          <>
+            Over <span style={{'color': theme.colors.secondary}}>62%</span> of our members enjoyed their lives more <span style={{'color': theme.colors.secondary}}>with our products.</span>
+          </>
+        }
+        description={<>They saved an average of <span style={{'color': theme.colors.secondary }}>$1,000 dollars</span></>}
+        buttonText="Shop Exclusive Collections"
+        percentage={62}
+        duration={2000}
+        onButtonClick={() => alert('Button clicked!')}
       />
     </>
   )
