@@ -3,6 +3,7 @@ import styled, { DefaultTheme } from 'styled-components';
 import BackgroundVideo from '../components/BackgroundVideo';
 import { Subheading, Text } from '../styles/Typography';
 import { media } from '../utils/Media';
+import { PillButton } from '../styles/Base';
 
 const ParallaxContainer = styled.div<{ cardsLength: number }>`
   height: ${({ cardsLength }) => `calc(100vh * ${cardsLength})`}; /* Total height = number of cards * viewport height */
@@ -17,20 +18,18 @@ const Card = styled.div<{ index: number }>`
   z-index: ${({ index }) => 100 + index};
 `;
 
-const ContentWrapper = styled.div<{ textPosition: string }>`
+const ContentWrapper = styled.div<{ textPosition: string, contentBackgroundColor: string }>`
   position: absolute;
   z-index: 2; 
   color: white;
   width: 100%;
   max-width: 800px;
-  background: rgba(0,0,0,.3);
-//   backdrop-filter: blur(10px); /* Apply blur effect */
+  background: ${({ contentBackgroundColor }) => contentBackgroundColor || 'rgba(0,0,0,.5)'};
   padding: ${({ theme }) => theme.spacing.md};
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: ${({ theme }) => theme.spacing.md};
-  will-change: transform, backdrop-filter;
 
   ${({ textPosition }) =>
     textPosition === 'top-left' &&
@@ -89,7 +88,27 @@ interface CardData {
   textPosition?: 'top-left' | 'top-right' | 'center';
   textAlign?: 'left' | 'center';
   color?: keyof DefaultTheme['colors'];
+  fallbackImage?: 'string';
+  contentBackgroundColor?: 'string';
+  calloutButtonText?: 'string';
+  calloutButtonAction?: () => void;
 }
+
+const StyledPillButton = styled(PillButton)`
+  height: 48px;
+  min-width: 300px;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  ${media.md} {
+    width: auto;
+    left: 5%;
+    right: 5%;
+    transform: translateX(0%);
+  }
+`;
 
 interface ParallaxCardsProps {
   cards: CardData[];
@@ -106,10 +125,11 @@ const ParallaxCards: React.FC<ParallaxCardsProps> = ({
         <Card key={i} index={i}>
           <BackgroundVideo
             videoSrc={card.videoSrc}
-            overlayColor="rgba(0, 0, 0, 0.4)"
-            overlayOpacity={0.6}
+            overlayColor="rgb(0,0,0)"
+            overlayOpacity={0.2}
+            fallbackImage={card.fallbackImage}
           >
-            <ContentWrapper textPosition={card.textPosition || defaultTextPosition}>
+            <ContentWrapper textPosition={card.textPosition || defaultTextPosition} contentBackgroundColor={card.contentBackgroundColor}>
               <OverlayText>
                 <StyledSubheading color={card.color} size="xxxl" align={card.textAlign}>
                   {card.title}
@@ -119,6 +139,7 @@ const ParallaxCards: React.FC<ParallaxCardsProps> = ({
                 </Text>
               </OverlayText>
             </ContentWrapper>
+            {card.calloutButtonText && (<StyledPillButton variant="white-secondary" onClick={card.calloutButtonAction}>{card.calloutButtonText}</StyledPillButton>)}
           </BackgroundVideo>
         </Card>
       ))}

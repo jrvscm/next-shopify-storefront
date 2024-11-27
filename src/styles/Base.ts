@@ -37,7 +37,7 @@ export const Flex = styled.div<{
 `;
 
 export const Button = styled.button<{
-  variant?: 'primary' | 'secondary' | 'tertiary';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'white-secondary'
 }>`
   padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
   font-size: 18px;
@@ -47,28 +47,27 @@ export const Button = styled.button<{
   transition: all 0.3s ease;
 
   background-color: ${({ variant, theme }) =>
-    variant === 'primary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.secondary : 'transparent'};
+    variant === 'primary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.secondary : variant === 'white-secondary' ? 'transparent' : 'transparent'};
   color: ${({ variant, theme }) =>
-    variant === 'primary' ? theme.colors.white : variant === 'secondary' ? theme.colors.white : theme.colors.text};
-  border: ${({ theme, variant }) => `2px solid ${variant === 'secondary' || variant === 'primary' ? theme.colors.primary : theme.colors.secondary}`};
+    variant === 'primary' ? theme.colors.white : variant === 'secondary' ? theme.colors.white : variant === 'white-secondary' ? theme.colors.white : theme.colors.text};
+  border: ${({ theme, variant }) => `2px solid ${variant === 'secondary' || variant === 'primary' ? theme.colors.primary : variant === 'white-secondary' ? theme.colors.white : theme.colors.secondary}`};
   filter: ${({ variant, theme }) =>
-    variant === 'secondary' || variant === 'tertiary' ? 'none' : 'brightness(90%)'};
+    variant === 'secondary' || variant === 'tertiary' || variant === 'white-secondary' ? 'none' : 'brightness(90%)'};
 
   &:hover {
     background-color: ${({ variant, theme }) =>
-      variant === 'primary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.secondary : theme.colors.white};
+      variant === 'primary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.secondary : variant === 'white-secondary' ? theme.colors.white : theme.colors.white};
     color: ${({ variant, theme }) =>
-      variant === 'secondary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.text : theme.colors.primary};
+      variant === 'secondary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.text : variant === 'white-secondary' ? theme.colors.secondary : theme.colors.primary};
     filter: ${({ variant, theme }) =>
-      variant === 'secondary' ? 'none' : 'brightness(100%)'};
+      variant === 'secondary' || variant === 'white-secondary' ? 'none' : 'brightness(100%)'};
   }
 
   & > * {
     cursor: inherit; /* Ensure child elements inherit the cursor style */
   }
 
-  @media (max-width: 768px) {
-    // font-size: 14px;
+  ${media.md} {
     padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
   }
 `;
@@ -84,19 +83,18 @@ export const PillButton = styled(Button)`
 
   &:hover {
     background-color: ${({ variant, theme }) =>
-      variant === 'primary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.secondary : theme.colors.white};
+      variant === 'primary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.secondary : variant === 'white-secondary' ? theme.colors.white : theme.colors.white};
     color: ${({ variant, theme }) =>
-      variant === 'secondary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.text : theme.colors.white};
+      variant === 'secondary' ? theme.colors.primary : variant === 'tertiary' ? theme.colors.text : variant === 'white-secondary' ? theme.colors.secondary : theme.colors.white};
     filter: ${({ variant, theme }) =>
-      variant === 'secondary' ? 'none' : 'brightness(100%)'};
+      variant === 'secondary' || variant === 'white-secondary' ? 'none' : 'brightness(100%)'};
   }
 
   & > * {
     cursor: inherit; /* Ensure child elements inherit the cursor style */
   }
 
-  @media (max-width: 768px) {
-    // font-size: 14px;
+  ${media.md} {
     padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
   }
 `;
@@ -110,7 +108,7 @@ export const Heading = styled.h1<{ size?: 'large' | 'medium' | 'small' }>`
   margin: 0;
   color: ${({ theme }) => theme.colors.text};
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: ${({ size }) =>
       size === 'large' ? '2rem' : size === 'medium' ? '1.5rem' : '1.25rem'};
   }
@@ -123,7 +121,7 @@ export const Subheading = styled.p<{ size?: 'large' | 'small' }>`
   line-height: 1.5;
   margin: 0;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: ${({ size }) => (size === 'large' ? '1rem' : '0.875rem')};
   }
 `;

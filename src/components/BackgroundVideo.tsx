@@ -62,7 +62,7 @@ export const BackgroundVideo: React.FC<BackgroundVideoProps> = ({
   children,
   overlayColor = 'black',
   overlayOpacity = 0.5,
-  fallbackImage,
+  fallbackImage = '/images/pens.jpg'
 }) => (
   <VideoWrapper fallbackImage={fallbackImage}>
     <Video autoPlay muted loop playsInline>

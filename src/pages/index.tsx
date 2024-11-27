@@ -70,7 +70,8 @@ const HomePage: React.FC = () => {
       description: '',
       textPosition: 'top-left',
       textAlign: 'left',
-      color: theme.colors.white
+      color: theme.colors.white,
+      fallbackImage: ''
     },
     {
       videoSrc: `https://videos.ctfassets.net/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}/4eZYFeMZ2hz5nhxOtaLzdS/a9898e314f0c5621a001cd26d382fad2/2414312-hd_1920_1080_30fps.mp4`,
@@ -78,7 +79,8 @@ const HomePage: React.FC = () => {
       description: '',
       textPosition: 'center',
       textAlign: 'center',
-      color: theme.colors.white
+      color: theme.colors.white,
+      fallbackImage: ''
     },
     {
       videoSrc: `https://videos.ctfassets.net/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}/3KRa1ocovOXQjrDiiblzCU/4837529a1cd54a94b68e9637d52674af/beach.mp4`,
@@ -86,17 +88,29 @@ const HomePage: React.FC = () => {
       description: '',
       textPosition: 'bottom-right',
       textAlign: 'left',
-      color: theme.colors.white
+      color: theme.colors.white,
+      fallbackImage: ''
     },
+    {
+      videoSrc: null,
+      title: 'The steady rhythm of waves meets the quiet strength of the shoreline, a place where sea and sky converge.',
+      description: '',
+      textPosition: 'top-left',
+      textAlign: 'left',
+      color: theme.colors.white,
+      fallbackImage: '/images/pens.jpg',
+      calloutButtonText: 'Shop Now!',
+      calloutButtonAction: () => console.log('slide button clicked')
+    }
   ];
 
   return (
     <>
       <BackgroundVideo
         videoSrc="/videos/hero-video.mp4"
-        overlayColor="rgba(0, 0, 0, 0.6)"
-        overlayOpacity={0.6}
-        fallbackImage="/images/fallback.jpg"
+        overlayColor="rgba(0, 0, 0)"
+        overlayOpacity={0.3}
+        fallbackImage="/images/pens.jpg"
       >
         <Container>
           <StyledGrid columns="repeat(12, 1fr)">
